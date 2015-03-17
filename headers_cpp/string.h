@@ -1,7 +1,7 @@
 /*******************************************************
  *	string.h
  *	author:天命剑主
- *	copyright(c) 2015 - ~: All rifgts reserved! 保留所有权利！
+ *	copyright(c) 2015 - ~: 请查看LICENSE文件
  *	Description(描述):字符串
  ******************************************************/
 #pragma once
@@ -52,14 +52,14 @@ public:
         return *this;
     }
 
-    String(const string &js) {
-        this->length = (int) js.size();
-        this->str = new char[this->length + 1];
-        for (int i = 0; i < this->length; i++) {
-            this->str[i] = js[i];
-        }
-        this->str[length] = '\0';
-    }
+    //String(const string &js) {
+    //    this->length = (int) js.size();
+    //    this->str = new char[this->length + 1];
+    //    for (int i = 0; i < this->length; i++) {
+    //        this->str[i] = js[i];
+    //    }
+    //    this->str[length] = '\0';
+    //}
 
     String(const char *js) {
         int size = 0;
@@ -120,19 +120,19 @@ public:
         return result;
     }
 
-    /*字符串连接*/
-    String operator+(const string &j) const {
-        int size = (int) j.size();
-        String result(this->length + size);
-        for (int i = 0; i < this->length; i++) {
-            result.str[i] = this->str[i];
-        }
-        for (int k = 0; k < size; k++) {
-            result.str[k + this->length] = j[k];
-        }
-        result.str[this->length + size] = '\0';
-        return result;
-    }
+    ///*字符串连接*/
+    //String operator+(const string &j) const {
+    //    int size = (int) j.size();
+    //    String result(this->length + size);
+    //    for (int i = 0; i < this->length; i++) {
+    //        result.str[i] = this->str[i];
+    //    }
+    //    for (int k = 0; k < size; k++) {
+    //        result.str[k + this->length] = j[k];
+    //    }
+    //    result.str[this->length + size] = '\0';
+    //    return result;
+    //}
 
     /*在尾部追加字符*/
     String operator+(const char &c) const {
@@ -225,23 +225,23 @@ public:
         this->length = this->length + j.length;
     }
 
-    /*字符串连接*/
-    void operator+=(const string &j) {
-        int size = (int) j.size();
-        String temp = *this;
-        if (this->str) {
-            delete[] this->str;
-        }
-        this->str = new char[this->length + size + 1];
-        for (int i = 0; i < this->length; i++) {
-            this->str[i] = temp.str[i];
-        }
-        for (int k = 0; k < size; k++) {
-            this->str[k + this->length] = j[k];
-        }
-        this->str[this->length + size] = '\0';
-        this->length = this->length + size;
-    }
+    ///*字符串连接*/
+    //void operator+=(const string &j) {
+    //    int size = (int) j.size();
+    //    String temp = *this;
+    //    if (this->str) {
+    //        delete[] this->str;
+    //    }
+    //    this->str = new char[this->length + size + 1];
+    //    for (int i = 0; i < this->length; i++) {
+    //        this->str[i] = temp.str[i];
+    //    }
+    //    for (int k = 0; k < size; k++) {
+    //        this->str[k + this->length] = j[k];
+    //    }
+    //    this->str[this->length + size] = '\0';
+    //    this->length = this->length + size;
+    //}
 
     /*字符串相等比较*/
     bool operator==(const String &j) const {
@@ -328,10 +328,10 @@ public:
         return this->length - 1;
     }
 
-    /*字符串连接*/
-    inline friend String operator+(const string &s, const String &js) {
-        return String(s) + js;
-    }
+    ///*字符串连接*/
+    //inline friend String operator+(const string &s, const String &js) {
+    //    return String(s) + js;
+    //}
 
     /*返回字符所在位置*/
     int index_of(const char &c) const {
@@ -353,10 +353,10 @@ public:
         return this->index_of_KMP(s) > -1;
     }
 
-    /*是否包含字符串*/
-    inline bool contains(const string &s) const {
-        return this->index_of_KMP(s) > -1;
-    }
+    ///*是否包含字符串*/
+    //inline bool contains(const string &s) const {
+    //    return this->index_of_KMP(s) > -1;
+    //}
 
     /*返回指定子字符串在此字符串中第一次出现处的索引(从0开始索引)*/
     int index_of(const String &s) const {
@@ -468,5 +468,5 @@ public:
         return *this;
     }
 };
-
+typedef String string;
 #endif

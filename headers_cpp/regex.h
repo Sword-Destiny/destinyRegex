@@ -1,7 +1,7 @@
 /*******************************************************
  *	regex.h
  *	author:天命剑主
- *	copyright(c) 2015 - ~: All rifgts reserved! 保留所有权利！
+ *	copyright(c) 2015 - ~: 请查看LICENSE文件
  *	Description(描述):正则表达式定义
  ******************************************************/
 #pragma once
@@ -15,9 +15,17 @@ namespace RegularExpression {
 	class regex {
 	public:
 		String pattern;
-		inline regex(const String& str) :pattern(str) {}
-		inline regex(const string& str) : pattern(str) {}
+		inline regex():pattern(""){}
+		inline regex(const String& str) :pattern(str) {
+			this->compile(str);
+		}
+		//inline regex(const string& str) : pattern(str) {
+		//	this->compile(str);
+		//}
 		inline virtual ~regex() {}
+		void compile(const String& str) {
+			//TODO
+		}
 	};
 
 	template<class T>

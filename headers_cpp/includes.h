@@ -1,7 +1,7 @@
 /*******************************************************
  *	includes.h
  *	author:天命剑主
- *	copyright(c) 2015 - ~: All rifgts reserved! 保留所有权利！
+ *	copyright(c) 2015 - ~: 请查看LICENSE文件
  *	Description(描述):项目中所包含的所有C++11标准库文件,一些全局变量,辅助函数,数据结构定义
  ******************************************************/
 #pragma once
@@ -34,7 +34,7 @@ using std::ifstream;
 using std::ofstream;
 
 #include <string>
-using std::string;
+//using std::string;
 using std::getline;
 
 #include <sstream>

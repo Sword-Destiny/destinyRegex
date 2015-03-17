@@ -1,7 +1,7 @@
 /*******************************************************
  *	single_list.h
  *	author:天命剑主
- *	copyright(c) 2015 - ~: All rifgts reserved! 保留所有权利！
+ *	copyright(c) 2015 - ~: 请查看LICENSE文件
  *	Description(描述):单链表定义
  ******************************************************/
 #pragma once
