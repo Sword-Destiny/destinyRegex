@@ -22,18 +22,24 @@ void free_char_list(struct list_char* list) {
 }
 
 /*释放空间*/
-inline void free_single_condition(struct single_condition* s_con) {
-	free_char_list(s_con->match_letters);
+inline void free_single_conditions(struct single_condition* s_con) {
+	struct single_condition* next;
+	while (s_con) {
+		next = s_con->next;
+		free_char_list(s_con->match_letters);
+		free(s_con);
+		s_con = next;
+	}
 }
 
 /*释放空间*/
-void free_condition_list(struct list_condition *list) {
-	struct list_condition* next;
-	while (list) {
-		next = list->next;
-		free_single_condition(&(list->value));
-		free(list);
-		list = next;
+void free_conditions(struct condition *con) {
+	struct condition* next;
+	while (con) {
+		next = con->next;
+		free_single_conditions(con->single_conditions);
+		free(con);
+		con = next;
 	}
 }
 
@@ -59,9 +65,10 @@ void free_regex_token_iterator(struct regex_token_iterator* it) {
 
 /*释放空间*/
 inline void free_regex(struct regex* reg) {
-	free_condition_list(reg->con);
+	free_conditions(reg->conditions);
 	free_match_iterator(reg->match_strs);
 	free_regex_token_iterator(reg->token_strs);
+	free(reg);
 }
 
 //编译正则表达式
@@ -70,10 +77,7 @@ bool compile(struct regex *reg) {
 	while (reg->str[len] != '\0') {
 		len++;
 	}
-	reg->length_str = len;
-	reg->con = NULL;
-	reg->match_strs = NULL;
-	reg->token_strs = NULL;
+	reg->str_len = len;
 	return init(reg, 0, len - 1, -1);
 }
 

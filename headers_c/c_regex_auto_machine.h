@@ -18,6 +18,8 @@ bool init(struct regex* reg, int begin, int end, int type/*不使用此参数*/) {
 		switch (reg->str[i]) {
 			case '\0':
 				return true;
+			case LEFT_LARGE_BRACE:
+				break;
 			default:
 				break;
 		}
