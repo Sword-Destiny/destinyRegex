@@ -20,30 +20,21 @@ int main() {
 	system("pause");
 #else
 	//for (int i = 0; i < 10000000; i++) {
-	struct list_char* l_c = construct_char('a');
-	l_c->next = construct_char('b');
-	struct single_condition* s_con = construct_s_condition(l_c, 1, 3);
-
-	struct list_char* l_c1 = construct_char('c');
-	l_c1->next = construct_char('d');
-	s_con->next = construct_s_condition(l_c1, 2, 4);
-
-	struct condition* con = construct_condition(s_con);
-
-	struct list_char* l_c2 = construct_char('e');
-	l_c2->next = construct_char('f');
-	struct single_condition* s_con1 = construct_s_condition(l_c2, 3, 6);
-
-	struct list_char* l_c3 = construct_char('g');
-	l_c3->next = construct_char('h');
-	s_con1->next = construct_s_condition(l_c3, 4, 8);
-
-	con->next = construct_condition(s_con1);
-
-	struct regex* reg = construct_regex("[ab]{1,3}[cd]{2,4}");
-	compile(reg);
-	reg->conditions = con;
-	free_regex(reg);
+	struct regex* reg = construct_regex("[\\?\\.\\(\\{\\t]{1,2}[\\t]{2}");
+	if (regex_search("aaa.\t\tbbb", reg)) {
+		printf("true!\n");
+	}
+	else {
+		printf("%s\n", error_str);
+		error_str = "";
+	}
+	if (regex_search(".", reg)) {
+		printf("true!\n");
+	}
+	else {
+		printf("%s\n", error_str);
+		error_str = "";
+	}
 	//}
 	system("pause");
 	return 0;

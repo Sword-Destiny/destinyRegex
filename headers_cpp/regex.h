@@ -10,7 +10,7 @@
 #include "string.h"
 
 namespace RegularExpression {
-
+	using destinyRegexCpp::String;
 	/*正则表达式类*/
 	class regex {
 	public:

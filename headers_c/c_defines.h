@@ -12,46 +12,15 @@
 #define NULL 0
 #define MAX_INT_VAL 0x7FFFFFFF
 
-#ifndef _Bool
 #define true 1
 #define false 0
-#define bool int
-#endif
-
-#define OR_CHAR '|'
+#define bool char
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-#define LEFT_LARGE_BRACE '{'
-#define RIGHT_LARGE_BRACE '}'
-#define LEFT_MID_BRACKET '['
-#define RIGHT_MID_BRACKET ']'
-#define LEFT_BRACKET '('
-#define RIGHT_BRACKET ')'
-#define CHANGE_LETTER '\\' //双斜线转义
-#define TAB 't' //需要转义
-#define RETURN_ 'r' //需要转义
-#define NEW_LINE 'n' //需要转义
-#define BLANK ' ' //空格
-#define COMMA ',' //逗号
-#define DOT '.' //通配符
-#define MULTI_MATCH_LETTER '*' //多次匹配符
-#define QUES '?' //0或1个
-#define PLUS '+' //一个或多个
-#define DECIMAL 'd' //一个十进制数字,需要转义
-#define LOWER_LETTER 'l' //一个小写字母,需要转义
-#define SPACE 's' //一个空白符（空格符，制表符等）,需要转义
-#define UPER_LETTER 'u'//一个大写字母,需要转义
-#define SIMPLE_LETTER 'w' //一个字母（a～z或A～Z）或数字（0～9）或下划线（_）,需要转义
-#define NOT_DECIMAL 'D' //除了\d之外的字符,需要转义
-#define NOT_LOWER_LETTER 'L' //除了\l之外的字符,需要转义
-#define NOT_SPACE 'S' //除了\s之外的字符,需要转义
-#define NOT_UPER_LETTER 'U' //除了\u之外的字符,需要转义
-#define NOT_SIMPLE_LETTER 'W' //除了\w之外的字符,需要转义
-#define RANGE_LETTER '-' //范围表示符
-
-enum auto_machine_ident {
+/*enum auto_machine_ident {
 	left_large_brace = '{',
 	right_large_brace = '}',
 	left_mid_bracket = '[',
@@ -79,7 +48,7 @@ enum auto_machine_ident {
 	not_uper_letter = 'U',//除了\u之外的字符,需要转义
 	not_simple_letter = 'W', //除了\w之外的字符,需要转义
 	range_letter = '-' //范围表示符
-};
+};*/
 
 /*list for chars*/
 struct list_char {
@@ -158,6 +127,104 @@ inline struct regex* construct_regex(const char* str) {
 	reg->match_strs = NULL;
 	reg->token_strs = NULL;
 	return reg;
+}
+
+
+/*释放空间*/
+void free_char_list(struct list_char* list) {
+	struct list_char* next;
+	while (list) {
+		next = list->next;
+		free(list);
+		list = next;
+	}
+}
+
+/*释放空间*/
+inline void free_single_conditions(struct single_condition* s_con) {
+	struct single_condition* next;
+	while (s_con) {
+		next = s_con->next;
+		free_char_list(s_con->match_letters);
+		free(s_con);
+		s_con = next;
+	}
+}
+
+/*释放空间*/
+void free_conditions(struct condition *con) {
+	struct condition* next;
+	while (con) {
+		next = con->next;
+		free_single_conditions(con->single_conditions);
+		free(con);
+		con = next;
+	}
+}
+
+/*释放空间*/
+void free_match_iterator(struct match_iterator* it) {
+	struct match_iterator* next;
+	while (it) {
+		next = it->next;
+		free(it);
+		it = next;
+	}
+}
+
+/*释放空间*/
+void free_regex_token_iterator(struct regex_token_iterator* it) {
+	struct regex_token_iterator* next;
+	while (it) {
+		next = it->next;
+		free(it);
+		it = next;
+	}
+}
+
+/*释放空间*/
+inline void free_regex(struct regex* reg) {
+	free_conditions(reg->conditions);
+	free_match_iterator(reg->match_strs);
+	free_regex_token_iterator(reg->token_strs);
+	//free(reg);
+}
+
+/*是否包含数字字符*/
+bool has_num(const char* str) {
+	int index = 0;
+	while (str[index] != '\0') {
+		if (str[index] >= '0'&&str[index] <= '9') {
+			return true;
+		}
+		index++;
+	}
+	return false;
+}
+
+/*是否是一个数字*/
+bool is_num(const char* str) {
+	bool has_num_char = false;
+	bool has_num = false;
+	int index = 0;
+	while (str[index] != '\0') {
+		if (str[index] >= '0'&&str[index] <= '9') {
+			if (has_num) {
+				return false;
+			}
+			has_num_char = true;
+		}
+		else if (str[index] == ' ') {
+			if (has_num_char) {
+				has_num = true;
+			}
+		}
+		else {
+			return false;
+		}
+		index++;
+	}
+	return has_num_char;
 }
 
 #endif
