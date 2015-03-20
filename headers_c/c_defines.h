@@ -10,7 +10,7 @@
 #define C_DESTINY_REGEX
 
 #define NULL 0
-#define MAX_INT_VAL 0x7FFFFFFF
+#define MAX_INT_VAL 0x3FFFFFFF
 
 #define true 1
 #define false 0
@@ -20,37 +20,40 @@
 #include <stdio.h>
 #include <string.h>
 
-/*enum auto_machine_ident {
-	left_large_brace = '{',
-	right_large_brace = '}',
-	left_mid_bracket = '[',
-	right_mid_bracket = ']',
-	left_bracket = '(',
-	right_bracket = ')',
-	change_letter = '\\', //双斜线转义
-	tab = 't',//需要转义
-	return_ = 'r',//需要转义
-	new_line = 'n', //需要转义
-	blank = ' ',//空格
-	comma = ',', //逗号
-	dot = '.',//通配符
-	multi_match_letter = '*', //多次匹配符
-	ques = '?',//0或1个
-	plus = '+',//一个或多个
-	decimal = 'd',//一个十进制数字,需要转义
-	lower_letter = 'l', //一个小写字母,需要转义
-	space = 's',//一个空白符（空格符，制表符等）,需要转义
-	uper_letter = 'u',//一个大写字母,需要转义
-	simple_letter = 'w', //一个字母（a～z或A～Z）或数字（0～9）或下划线（_）,需要转义
-	not_decimal = 'D',//除了\d之外的字符,需要转义
-	not_lower_letter = 'L', //除了\l之外的字符,需要转义
-	not_space = 'S',//除了\s之外的字符,需要转义
-	not_uper_letter = 'U',//除了\u之外的字符,需要转义
-	not_simple_letter = 'W', //除了\w之外的字符,需要转义
-	range_letter = '-' //范围表示符
-};*/
+#define OR_CHAR '|'
+#define LEFT_LARGE_BRACE '{'
+#define RIGHT_LARGE_BRACE '}'
+#define LEFT_MID_BRACKET '['
+#define RIGHT_MID_BRACKET ']'
+#define LEFT_BRACKET '('
+#define RIGHT_BRACKET ')'
+#define CHANGE_LETTER '\\' //双斜线转义
+#define TAB 't' //需要转义
+#define RETURN_ 'r' //需要转义
+#define NEW_LINE 'n' //需要转义
+#define NEW_PAGE 'f' //需要转义
+#define TAB_V 'v' //需要转义
+#define BLANK ' ' //空格
+#define COMMA ',' //逗号
+#define DOT '.' //通配符
+#define MULTI_MATCH_LETTER '*' //多次匹配符
+#define QUES '?' //0或1个
+#define PLUS '+' //一个或多个
+#define DECIMAL 'd' //一个十进制数字,需要转义
+#define LOWER_LETTER 'l' //一个小写字母,需要转义
+#define SPACE 's' //一个空白符（空格符，制表符等）,需要转义
+#define UPER_LETTER 'u'//一个大写字母,需要转义
+#define SIMPLE_LETTER 'w' //一个字母（a～z或A～Z）或数字（0～9）或下划线（_）,需要转义
+#define NOT_DECIMAL 'D' //除了\d之外的字符,需要转义
+#define NOT_LOWER_LETTER 'L' //除了\l之外的字符,需要转义
+#define NOT_SPACE 'S' //除了\s之外的字符,需要转义
+#define NOT_UPER_LETTER 'U' //除了\u之外的字符,需要转义
+#define NOT_SIMPLE_LETTER 'W' //除了\w之外的字符,需要转义
+#define RANGE_LETTER '-' //范围表示符
 
-/*list for chars*/
+char* error_str = "";//错误信息
+
+/*匹配字符可选列表*/
 struct list_char {
 	char value;
 	struct list_char *next;
@@ -97,10 +100,18 @@ inline struct condition* construct_condition(struct single_condition* s_con) {
 }
 
 /*匹配字符串*/
-struct match_iterator {
-	struct match_iterator* next;
+struct regex_match_iterator {
+	struct regex_match_iterator* next;
 	char* value;
 };
+
+/*构造regex_match_iterator*/
+inline struct regex_match_iterator* construct_match_iterator(char* val) {
+	struct regex_match_iterator* it = (struct regex_match_iterator*)malloc(sizeof(struct regex_match_iterator));
+	it->next = NULL;
+	it->value = val;
+	return it;
+}
 
 /*未匹配字符串，拆分字符串*/
 struct regex_token_iterator {
@@ -108,13 +119,21 @@ struct regex_token_iterator {
 	char* value;
 };
 
+/*构造regex_token_iterator*/
+inline struct regex_token_iterator* construct_token_iterator(char* val) {
+	struct regex_token_iterator* it = (struct regex_token_iterator*)malloc(sizeof(struct regex_token_iterator));
+	it->next = NULL;
+	it->value = val;
+	return it;
+}
+
 /*正则表达式*/
 /*匹配之前必须compiler*/
 struct regex {
-	const char* str;
+	const char* reg_str;
 	int str_len;
 	struct condition* conditions;
-	struct match_iterator* match_strs;
+	struct regex_match_iterator* match_strs;
 	struct regex_token_iterator* token_strs;
 };
 
@@ -122,7 +141,7 @@ struct regex {
 inline struct regex* construct_regex(const char* str) {
 	struct regex* reg = (struct regex*)malloc(sizeof(struct regex));
 	reg->conditions = NULL;
-	reg->str = str;
+	reg->reg_str = str;
 	reg->str_len = 0;
 	reg->match_strs = NULL;
 	reg->token_strs = NULL;
@@ -130,7 +149,7 @@ inline struct regex* construct_regex(const char* str) {
 }
 
 
-/*释放空间*/
+/*释放list_char空间*/
 void free_char_list(struct list_char* list) {
 	struct list_char* next;
 	while (list) {
@@ -140,7 +159,7 @@ void free_char_list(struct list_char* list) {
 	}
 }
 
-/*释放空间*/
+/*释放single_condition空间*/
 inline void free_single_conditions(struct single_condition* s_con) {
 	struct single_condition* next;
 	while (s_con) {
@@ -151,7 +170,7 @@ inline void free_single_conditions(struct single_condition* s_con) {
 	}
 }
 
-/*释放空间*/
+/*释放condition空间*/
 void free_conditions(struct condition *con) {
 	struct condition* next;
 	while (con) {
@@ -162,32 +181,33 @@ void free_conditions(struct condition *con) {
 	}
 }
 
-/*释放空间*/
-void free_match_iterator(struct match_iterator* it) {
-	struct match_iterator* next;
+/*释放regex_match_iterator空间*/
+void free_match_iterator(struct regex_match_iterator* it) {
+	struct regex_match_iterator* next;
 	while (it) {
 		next = it->next;
+		free(it->value);
 		free(it);
 		it = next;
 	}
 }
 
-/*释放空间*/
+/*释放regex_token_iterator空间*/
 void free_regex_token_iterator(struct regex_token_iterator* it) {
 	struct regex_token_iterator* next;
 	while (it) {
 		next = it->next;
+		free(it->value);
 		free(it);
 		it = next;
 	}
 }
 
-/*释放空间*/
+/*释放regex空间*/
 inline void free_regex(struct regex* reg) {
 	free_conditions(reg->conditions);
 	free_match_iterator(reg->match_strs);
 	free_regex_token_iterator(reg->token_strs);
-	//free(reg);
 }
 
 /*是否包含数字字符*/
@@ -227,4 +247,58 @@ bool is_num(const char* str) {
 	return has_num_char;
 }
 
+
+/*得到正则表达式最短匹配长度*/
+int get_regex_least_length(struct regex* reg) {
+	int least_len = MAX_INT_VAL;
+	int len;
+	struct condition* con = reg->conditions;
+	while (con) {
+		len = 0;
+		struct single_condition* s_con = con->single_conditions;
+		while (s_con) {
+			len += s_con->least_match_time;
+			s_con = s_con->next;
+		}
+		if (len < least_len) {
+			least_len = len;
+		}
+		con = con->next;
+	}
+	return least_len;
+}
+
+/*得到正则表达式最长匹配长度*/
+int get_regex_max_length(struct regex* reg) {
+	int max_len = 0;
+	int len;
+	struct condition* con = reg->conditions;
+	while (con) {
+		len = 0;
+		struct single_condition* s_con = con->single_conditions;
+		while (s_con) {
+			if (len < MAX_INT_VAL) {
+				len += s_con->max_match_time;
+			}
+			s_con = s_con->next;
+		}
+		if (len > max_len) {
+			max_len = len;
+		}
+		con = con->next;
+	}
+	return max_len;
+}
+
+/*构造字符串*/
+char* generate_str(const char* str, int start, int end) {
+	char* s = (char*)malloc((end - start + 2)*sizeof(char));
+	int j = 0;
+	for (int i = start; i <= end; i++) {
+		s[j] = str[i];
+		j++;
+	}
+	s[j] = '\0';
+	return s;
+}
 #endif
