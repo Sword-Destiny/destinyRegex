@@ -17,7 +17,7 @@ destinyRegex
     
     version: 0.1
     
-    C++:示例文件test.cpp
+C++:示例文件test.cpp
 
     语法：
     各个特殊字符含义如下定义
@@ -98,10 +98,8 @@ destinyRegex
 
     C++的版本使用的是作者自己写的string类，作者为了模仿C++11标准库中得std::string类把该类写得
     和std::string的用法都差不多,所以大家在使用时要注意命名空间的变化,不要把这两个类弄混了
-    </pre>
-    <pre>
-        
-    C:示例文件test.c
+    
+C:示例文件test.c
     
     正则表达式基本语法与C++相同,参照C++,具体使用参照test.c
     不同的是在C语言的版本中没有sregex_token_iterator类,所以直接给出了regex_splite函数，分割后的
