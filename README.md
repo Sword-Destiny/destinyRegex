@@ -4,18 +4,17 @@
     <meta charset="GBK" content="text/html;charset=GBK" />
 </head>
 <body>
-    <p>
-        <pre>
+    <pre>
 destinyRegex
             Regular Expression(正则表达式实现)
             打算实现C和C++的接口
             使用时需要包含headers.h头文件
-    
+            
             author:	Sword-Destiny
             作者:	天命剑主(武汉大学国际软件学院2013级袁浩)
             QQ:	1948281915
             邮箱:	yuanhonglong@outlook.com
-
+            
             version: 0.1
     
 C++:    示例文件test.cpp
@@ -105,14 +104,15 @@ C:      示例文件test.c
             不同的是在C语言的版本中没有sregex_token_iterator类,所以直接给出了regex_splite函数，分割后的
             字符串存放于regex结构体中,具体情况可以看test.c示例代码
 
-            C语言的版本中不仅在regex-&gt;token_strs中得到分割的字符串，
-            还可以在regex-&gt;match_strs中得到匹配的字符串,
+            C语言的版本中不仅在regex->token_strs中得到分割的字符串，
+            还可以在regex->match_strs中得到匹配的字符串,
             比C++版本强大一些
 
             C++的版本没有提供regex_splite函数,而是提供了sregex_token_iterator类.之所以如此,
             是因为作者在模仿C++11标准库中的sregex_token_iterator的语法,
             大家很容易就可以自己参照C版本写出C++版本的代码
+            
         </pre>
-    </p>
+
 </body>
 </html>
