@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
     <title>destinyRegex</title>
     <meta charset="GBK" content="text/html;charset=GBK" />
@@ -7,9 +7,10 @@
     <pre>
         destinyRegex
 
-        Regular Expression(正则表达式实现)
-        打算实现C和C++的接口
-        使用时需要包含headers.h头文件
+        Regex:
+        Regular Expression(C/C++正则表达式库实现)
+        已实现C和C++的接口
+        使用时包含headers.h头文件
         
         author:	Sword-Destiny
         作者:	天命剑主(武汉大学国际软件学院2013级袁浩)
