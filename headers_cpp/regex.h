@@ -490,7 +490,6 @@ namespace RegularExpression {
 		/*初始状态*/
 		/*NOTICE:不使用type参数*/
 		bool init(int begin, int end) {
-			//记得在返回false前free掉所有的资源
 			current_condition = NULL;
 			temp_condition = NULL;
 			current_s_condition = NULL;
