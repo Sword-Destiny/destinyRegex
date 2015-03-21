@@ -29,11 +29,19 @@ C++:    示例文件test.cpp
             #define LEFT_BRACKET '('
             #define RIGHT_BRACKET ')'
             #define CHANGE_LETTER '\\' //双斜线转义
+<<<<<<< HEAD
             #define TAB 't' //需要转义
             #define RETURN_ 'r' //需要转义
             #define NEW_LINE 'n' //需要转义
             #define NEW_PAGE 'f' //需要转义
             #define TAB_V 'v' //需要转义
+=======
+            #define TAB 't' 
+            #define RETURN_ 'r' 
+            #define NEW_LINE 'n' 
+            #define NEW_PAGE 'f' 
+            #define TAB_V 'v' 
+>>>>>>> 8f8126bf8bf76ec1f24baffc0d3c3ff7ea04d4f6
             #define BLANK ' ' //空格
             #define COMMA ',' //逗号
             #define DOT '.' //通配符
@@ -44,7 +52,11 @@ C++:    示例文件test.cpp
             #define LOWER_LETTER 'l' //一个小写字母,需要转义
             #define SPACE 's' //一个空白符（空格符，制表符等）,需要转义
             #define UPER_LETTER 'u'//一个大写字母,需要转义
+<<<<<<< HEAD
             #define SIMPLE_LETTER 'w' //一个字母a～z或A～Z或数字0～9或下划线_,需要转义
+=======
+            #define SIMPLE_LETTER 'w' //一个字母（a～z或A～Z）或数字（0～9）或下划线（_）,需要转义
+>>>>>>> 8f8126bf8bf76ec1f24baffc0d3c3ff7ea04d4f6
             #define NOT_DECIMAL 'D' //除了\d之外的字符,需要转义
             #define NOT_LOWER_LETTER 'L' //除了\l之外的字符,需要转义
             #define NOT_SPACE 'S' //除了\s之外的字符,需要转义
@@ -96,14 +108,20 @@ C++:    示例文件test.cpp
 
             NOTICE:暂时不支持使用()进行多个正则表达式的连接
 
+<<<<<<< HEAD
             C++的版本使用的是作者自己写的string类，作者为了模仿C++11标准库中得std::string类把该类写得
             和std::string的用法都差不多,所以大家在使用时要注意命名空间的变化,不要把这两个类弄混了
+=======
+            C++的版本使用的是作者自己写的string类，作者为了模仿C++11标准库中得std::string类把该类写得和std::string
+            的用法都差不多,所以大家在使用时要注意命名空间的变化,不要把这两个类弄混了
+>>>>>>> 8f8126bf8bf76ec1f24baffc0d3c3ff7ea04d4f6
 
 C:      示例文件test.c
             正则表达式基本语法与C++相同,参照C++,具体使用参照test.c
             不同的是在C语言的版本中没有sregex_token_iterator类,所以直接给出了regex_splite函数，分割后的
             字符串存放于regex结构体中,具体情况可以看test.c示例代码
 
+<<<<<<< HEAD
             C语言的版本中不仅在regex-&gt;token_strs中得到分割的字符串，
             还可以在regex-&gt;match_strs中得到匹配的字符串,
             比C++版本强大一些
@@ -111,6 +129,13 @@ C:      示例文件test.c
             C++的版本没有提供regex_splite函数,而是提供了sregex_token_iterator类.之所以如此,
             是因为作者在模仿C++11标准库中的sregex_token_iterator的语法,
             大家很容易就可以自己参照C版本写出C++版本的代码
+=======
+            C语言的版本中不仅在regex->token_strs中得到分割的字符串，还可以在regex->match_strs中得到匹配的字符串
+            比C++版本强大一些
+
+            C++的版本没有提供regex_splite函数,而是提供了sregex_token_iterator类.之所以如此,是因为作者在模仿C++11标准库中的
+            sregex_token_iterator的语法,大家很容易就可以自己参照C版本写出C++版本的代码
+>>>>>>> 8f8126bf8bf76ec1f24baffc0d3c3ff7ea04d4f6
         </pre>
     </p>
 </body>
