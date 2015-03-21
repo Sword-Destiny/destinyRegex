@@ -51,14 +51,14 @@ void test_match_c() {
 	struct regex reg;
 	reg.reg_str = "shja\\u{2,4}[\\.\\(]{0,4}[jkl]{3,}m{3}";
 	char* str = "shjaEWR.(.jkkljkljlkmmm";
-	if (regex_search(str, &reg)) {
+	if (regex_match(str, &reg)) {
 		printf("match!\n");
 	}
 	else {
 		printf("not match!\n");
 	}
 	char* str1 = "shjaEWR.(...jkkljkljlkmmm";
-	if (regex_search(str1, &reg)) {
+	if (regex_match(str1, &reg)) {
 		printf("match!\n");
 	}
 	else {

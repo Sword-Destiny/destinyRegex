@@ -7,7 +7,7 @@
 #	include "headers_cpp/string.h"
 using RegularExpression::error_str;
 using RegularExpression::regex;
-using RegularExpression::regex_token_iterator;
+//using RegularExpression::regex_token_iterator;
 using RegularExpression::sregex_token_iterator;
 //using RegularExpression::string;
 using RegularExpression::regex_match;
