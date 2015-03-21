@@ -266,7 +266,9 @@ bool left_mid_bracket(struct regex* reg, int begin, int end) {
 				}
 				break;
 			case RANGE_LETTER:
-				range(reg, i + 1, end);
+				if (!range(reg, i + 1, end)) {
+					return false;
+				}
 				break;
 			default:
 				char_list_add_char(reg->reg_str[i]);

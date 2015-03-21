@@ -5,11 +5,13 @@
 #ifdef __cplusplus
 #	include "headers_cpp/regex.h"
 #	include "headers_cpp/string.h"
-#	include "headers_cpp/single_list.h"
+using RegularExpression::error_str;
 using RegularExpression::regex;
-using RegularExpression::regex_token;
 using RegularExpression::regex_token_iterator;
 using RegularExpression::sregex_token_iterator;
+//using RegularExpression::string;
+using RegularExpression::regex_match;
+using RegularExpression::regex_search;
 #else
 #	include "headers_c\c_regex.h"
 #endif
