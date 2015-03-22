@@ -19,7 +19,7 @@ using std::ostream;
 
 #include <string>
 
-#include <exception>
-using std::exception;
+#include "exception.h"
+using RegularExpression::exception;
 
 #endif

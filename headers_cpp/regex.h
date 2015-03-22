@@ -2,7 +2,7 @@
  *	regex.h
  *	author:天命剑主
  *	copyright(c) 2015 - ~: 请查看LICENSE文件
- *	Description(描述):正则表达式定义
+ *	Description(描述):正则表达式
  ******************************************************/
 #pragma once
 #ifndef REGULAR_EXPRESSION_H
@@ -82,7 +82,7 @@ namespace RegularExpression {
 	static int temp_least_num = 0;
 	static int temp_max_num = 0;
 
-	char* error_str = "";
+	const char* error_str = "";
 
 	/*添加list_char*/
 	void char_list_add_char(char c) {
@@ -211,14 +211,14 @@ namespace RegularExpression {
 				temp_index = begin - 1;
 				return true;
 			}
-			char* buffer = (char*)malloc(sizeof(char) * 11);
+			char* buffer = new char[11];
 			int temp_num = 0;
 			int comma_num = 0;
 			for (int i = begin + 1; i <= end; i++) {
 				if (reg_str[i] == BLANK || reg_str[i] >= '0'&&reg_str[i] <= '9') {
 					if (temp_num > 9) {
 						error_str = "匹配次数的数字太大!";
-						free(buffer);
+						delete[] buffer;
 						return false;
 					}
 					buffer[temp_num] = reg_str[i];
@@ -227,7 +227,7 @@ namespace RegularExpression {
 				else if (reg_str[i] == COMMA) {
 					if (comma_num > 0) {
 						error_str = "匹配次数语法错误!";
-						free(buffer);
+						delete[] buffer;
 						return false;
 					}
 					buffer[temp_num] = '\0';
@@ -238,7 +238,7 @@ namespace RegularExpression {
 					}
 					else {
 						error_str = "匹配次数语法错误!";
-						free(buffer);
+						delete[] buffer;
 						return false;
 					}
 				}
@@ -249,14 +249,14 @@ namespace RegularExpression {
 							temp_max_num = atoi(buffer);
 							if (temp_least_num > temp_max_num) {
 								error_str = "最小匹配次数不能大于最大匹配次数!";
-								free(buffer);
+								delete[] buffer;
 								return false;
 							}
 						}
 						else {
 							if (has_num(buffer)) {
 								error_str = "匹配次数语法错误!";
-								free(buffer);
+								delete[] buffer;
 								return false;
 							}
 							else {
@@ -272,22 +272,22 @@ namespace RegularExpression {
 						}
 						else {
 							error_str = "匹配次数语法错误!";
-							free(buffer);
+							delete[] buffer;
 							return false;
 						}
 					}
 					temp_index = i;
-					free(buffer);
+					delete[] buffer;
 					return true;
 				}
 				else {
 					error_str = "计算匹配次数时出现了意外的字符";
-					free(buffer);
+					delete[] buffer;
 					return false;
 				}
 			}
 			error_str = "左大括号{和右大括号}不匹配!";
-			free(buffer);
+			delete[] buffer;
 			return false;
 		}
 
@@ -727,6 +727,8 @@ namespace RegularExpression {
 		}
 
 		regex_token_iterator(const char* begin, const char* end, const regex &r, const int& type = -1) {
+			this->first = NULL;
+			this->current = NULL;
 			if (begin > end) {
 				if (!regex_splite("", r)) {
 					throw exception(error_str);

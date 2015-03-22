@@ -114,6 +114,13 @@ C:示例文件test.c
         C++的版本没有提供regex_splite函数,而是提供了sregex_token_iterator类.之所以如此,
         是因为作者在模仿C++11标准库中的sregex_token_iterator的语法,
         大家很容易就可以自己参照C版本写出C++版本的代码
+        
+Linux*:	不得不承认在使用VS时编译都没有问题，最后使用GCC编译时发现GCC中ISO C标准不支持for循环初始化变量，
+		而且不支持内联函数所以在编译时需要特定的选项-std=c11,而且由于源文件编码格式是GBK，C++版本编译不能通过
+		C版本编译能通过,不过执行时出现中文乱码，所以最后向度娘问了一下，使用如下命令编译C语言版本：
+		gcc test.c -O5 -o test -std=c11 -finput-charset=GBK -fexec-charset=UTF-8
+		对应的C++编译命令：
+		g++ test.cpp -O5 -o testcpp -std=c++11 -finput-charset=GBK -fexec-charset=UTF-8
     </pre>
 
 </body>

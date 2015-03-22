@@ -1,3 +1,9 @@
+/*******************************************************
+ *	test.c
+ *	author:天命剑主
+ *	copyright(c) 2015 - ~: 请查看LICENSE文件
+ *	Description(描述):测试
+ ******************************************************/
 #include "header.h"
 
 /*正则表达式分割示例*/
@@ -75,6 +81,8 @@ int main() {
 	printf("\n");
 	test_match_c();
 	printf("\n");
+#ifdef _WIN32
 	system("pause");
+#endif
 	return 0;
 }

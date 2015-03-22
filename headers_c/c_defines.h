@@ -2,7 +2,7 @@
  *	c_defines.h
  *	author:天命剑主
  *	copyright(c) 2015 - ~: 请查看LICENSE文件
- *	Description(描述):字符串
+ *	Description(描述):一些定义
  ******************************************************/
 #pragma once
  /*数据结构定义*/
@@ -60,7 +60,7 @@ struct list_char {
 };
 
 /*构造list_char*/
-inline struct list_char* construct_char(char c) {
+struct list_char* construct_char(char c) {
 	struct list_char* list = (struct list_char*)malloc(sizeof(struct list_char));
 	list->value = c;
 	list->next = NULL;
@@ -76,7 +76,7 @@ struct single_condition {
 };
 
 /*构造single_condition*/
-inline struct single_condition* construct_s_condition(struct list_char* list, int l_m_time, int m_m_time) {
+struct single_condition* construct_s_condition(struct list_char* list, int l_m_time, int m_m_time) {
 	struct single_condition* con = (struct single_condition*)malloc(sizeof(struct single_condition));
 	con->match_letters = list;
 	con->least_match_time = l_m_time;
@@ -92,7 +92,7 @@ struct condition {
 };
 
 /*构造condition*/
-inline struct condition* construct_condition(struct single_condition* s_con) {
+struct condition* construct_condition(struct single_condition* s_con) {
 	struct condition* con = (struct condition*)malloc(sizeof(struct condition));
 	con->single_conditions = s_con;
 	con->next = NULL;
@@ -106,7 +106,7 @@ struct regex_match_iterator {
 };
 
 /*构造regex_match_iterator*/
-inline struct regex_match_iterator* construct_match_iterator(char* val) {
+struct regex_match_iterator* construct_match_iterator(char* val) {
 	struct regex_match_iterator* it = (struct regex_match_iterator*)malloc(sizeof(struct regex_match_iterator));
 	it->next = NULL;
 	it->value = val;
@@ -120,7 +120,7 @@ struct regex_token_iterator {
 };
 
 /*构造regex_token_iterator*/
-inline struct regex_token_iterator* construct_token_iterator(char* val) {
+struct regex_token_iterator* construct_token_iterator(char* val) {
 	struct regex_token_iterator* it = (struct regex_token_iterator*)malloc(sizeof(struct regex_token_iterator));
 	it->next = NULL;
 	it->value = val;
@@ -138,7 +138,7 @@ struct regex {
 };
 
 /*构造regex*/
-inline struct regex* construct_regex(const char* str) {
+struct regex* construct_regex(const char* str) {
 	struct regex* reg = (struct regex*)malloc(sizeof(struct regex));
 	reg->conditions = NULL;
 	reg->reg_str = str;
@@ -160,7 +160,7 @@ void free_char_list(struct list_char* list) {
 }
 
 /*释放single_condition空间*/
-inline void free_single_conditions(struct single_condition* s_con) {
+void free_single_conditions(struct single_condition* s_con) {
 	struct single_condition* next;
 	while (s_con) {
 		next = s_con->next;
@@ -204,7 +204,7 @@ void free_regex_token_iterator(struct regex_token_iterator* it) {
 }
 
 /*释放regex空间*/
-inline void free_regex(struct regex* reg) {
+void free_regex(struct regex* reg) {
 	free_conditions(reg->conditions);
 	free_match_iterator(reg->match_strs);
 	free_regex_token_iterator(reg->token_strs);

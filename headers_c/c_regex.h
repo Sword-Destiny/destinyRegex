@@ -2,7 +2,7 @@
  *	c_regex.h
  *	author:天命剑主
  *	copyright(c) 2015 - ~: 请查看LICENSE文件
- *	Description(描述):字符串
+ *	Description(描述):正则表达式
  ******************************************************/
 #pragma once
  /*C正则表达式*/
@@ -95,7 +95,7 @@ bool s_condition_match(const char* str, int start_index, int end_index, struct s
 }
 
 //正则表达式匹配condition
-inline bool condition_match(const char* str, int start_index, int end_index, struct condition* con) {
+bool condition_match(const char* str, int start_index, int end_index, struct condition* con) {
 	return s_condition_match(str, start_index, end_index, con->single_conditions);
 }
 

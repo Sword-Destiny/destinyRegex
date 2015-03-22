@@ -2,7 +2,7 @@
  *	test.cpp
  *	author:天命剑主
  *	copyright(c) 2015 - ~: 请查看LICENSE文件
- *	Description(描述):字符串
+ *	Description(描述):测试
  ******************************************************/
 #include "header.h"
 using std::string;
@@ -62,6 +62,8 @@ int main() {
 	test_token_cpp();
 	test_match_cpp();
 	test_search_cpp();
+#ifdef _WIN32
 	system("pause");
+#endif
 	return 0;
 }

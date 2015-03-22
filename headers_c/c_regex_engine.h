@@ -2,7 +2,7 @@
  *	c_regex_engine.h
  *	author:天命剑主
  *	copyright(c) 2015 - ~: 请查看LICENSE文件
- *	Description(描述):字符串
+ *	Description(描述):正则表达式引擎
  ******************************************************/
 #pragma once
 /*regex自动机*/
