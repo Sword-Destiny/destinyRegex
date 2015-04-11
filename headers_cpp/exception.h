@@ -13,7 +13,7 @@ namespace RegularExpression {
 	private:
 		const char* str;
 	public:
-		exception(const char* s) :str(s) {}
+		explicit exception(const char* s) :str(s) {}
 		virtual ~exception(){}
 		inline const char* what() {
 			return this->str;

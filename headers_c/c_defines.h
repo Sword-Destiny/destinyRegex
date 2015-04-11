@@ -17,7 +17,6 @@
 #define bool char
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 
 #define OR_CHAR '|'

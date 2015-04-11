@@ -256,7 +256,7 @@ bool left_mid_bracket(struct regex* reg, int begin, int end) {
 					error_str = "中括号[]中不能为空!";
 					return false;
 				}
-				break;
+				//break;
 			case CHANGE_LETTER:
 				if (!change_letter(reg, i + 1, end)) {
 					return false;

@@ -328,7 +328,7 @@ namespace RegularExpression {
 		}
 
 		/*返回字符数组*/
-		const char *const c_str() const {
+		const char* c_str() const {
 			return this->str;
 		}
 
@@ -377,30 +377,12 @@ namespace RegularExpression {
 
 		/*返回指定子字符串在此字符串中第一次出现处的索引(从0开始索引)*/
 		int index_of(const string &s) const {
-			int size = s.size();
-			for (int pos = 0; pos < this->length; pos++) {
-				for (int i = 0; i < size; i++) {
-					if (this->str[pos + i] != s[i]) {
-						continue;
-					}
-				}
-				return pos;
-			}
-			return -1;
+			return this->index_of_KMP(s);
 		}
 
 		/*返回指定子字符串在此字符串中第一次出现处的索引(从0开始索引)*/
 		int index_of(const std::string &s) const {
-			int size = s.size();
-			for (int pos = 0; pos < this->length; pos++) {
-				for (int i = 0; i < size; i++) {
-					if (this->str[pos + i] != s[i]) {
-						continue;
-					}
-				}
-				return pos;
-			}
-			return -1;
+			return this->index_of_KMP(s);
 		}
 
 	protected:

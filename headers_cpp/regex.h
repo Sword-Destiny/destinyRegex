@@ -16,7 +16,8 @@ namespace RegularExpression {
 	public:
 		char value;
 		list_char *next;
-		inline list_char(const char& c) {
+
+		explicit inline list_char(const char& c) {
 			this->value = c;
 			this->next = NULL;
 		}
@@ -85,7 +86,7 @@ namespace RegularExpression {
 	const char* error_str = "";
 
 	/*添加list_char*/
-	void char_list_add_char(char c) {
+	inline void char_list_add_char(char c) {
 		if (!current_char_list) {
 			current_char_list = new list_char(c);
 			temp_list_char = current_char_list;
@@ -97,7 +98,7 @@ namespace RegularExpression {
 	}
 
 	/*添加Single_condition*/
-	void s_condition_add_s_condition(list_char* list) {
+	inline void s_condition_add_s_condition(list_char* list) {
 		if (!current_s_condition) {
 			current_s_condition = new single_condition(list, temp_least_num, temp_max_num);
 			temp_s_condition = current_s_condition;
@@ -109,7 +110,7 @@ namespace RegularExpression {
 	}
 
 	/*添加condition*/
-	void condition_add_condition(single_condition* s_con) {
+	inline void condition_add_condition(single_condition* s_con) {
 		if (!current_condition) {
 			current_condition = new condition(s_con);
 			temp_condition = current_condition;
@@ -121,7 +122,7 @@ namespace RegularExpression {
 	}
 
 	/*list_char添加连续字符*/
-	void char_list_add_many_char(char start, char end) {
+	inline void char_list_add_many_char(char start, char end) {
 		if (!current_char_list) {
 			current_char_list = new list_char(start);
 			temp_list_char = current_char_list;
@@ -140,7 +141,7 @@ namespace RegularExpression {
 	}
 
 	/*释放空间*/
-	void free_current() {
+	inline void free_current() {
 		if (current_char_list) {
 			delete current_char_list;
 		}
@@ -169,7 +170,7 @@ namespace RegularExpression {
 				throw exception(error_str);
 			}
 		}
-		inline regex(const std::string& str) : reg_str(str) {
+		explicit inline regex(const std::string& str) : reg_str(str) {
 			if (!this->compile()) {
 				throw exception(error_str);
 			}
@@ -464,7 +465,7 @@ namespace RegularExpression {
 							error_str = "中括号[]中不能为空!";
 							return false;
 						}
-						break;
+						//break;
 					case CHANGE_LETTER:
 						if (!change_letter(i + 1, end)) {
 							return false;
@@ -771,7 +772,7 @@ namespace RegularExpression {
 				return *this;
 			}
 			if (this->first) {
-				regex_token<T> *head_node = this->first, *p = NULL;
+				regex_token<T> *head_node = this->first, *p;
 				while (head_node != NULL) {
 					p = head_node->next;
 					delete head_node;
@@ -826,7 +827,7 @@ namespace RegularExpression {
 
 		virtual ~regex_token_iterator() {
 			if (this->first) {
-				regex_token<T> *head_node = this->first, *p = NULL;
+				regex_token<T> *head_node = this->first, *p;
 				while (head_node != NULL) {
 					p = head_node->next;
 					delete head_node;
